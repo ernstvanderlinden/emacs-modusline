@@ -1,0 +1,75 @@
+* ModusLine
+  `modusline` is designed to be a lightweight and fast mode-line for Emacs `evil-mode` users. It aims to provide a minimal and efficient mode-line setup that integrates seamlessly with evil-mode's state indication.
+
+** Screenshots
+Here are some screenshots demonstrating `modusline` in action:
+
+#+CAPTION: Evil Normal State 
+[[./screenshots/screenshot1.png]]
+
+#+CAPTION: Evil Insert State 
+[[./screenshots/screenshot2.png]]
+
+#+CAPTION: Evil Emacs State 
+[[./screenshots/screenshot3.png]]
+
+** Features
+  - Lightweight and fast operation
+  - Easy customization of hidden minor modes
+  - Supports evil-mode state indication with customizable faces
+
+** Comparison
+  While `modusline` focuses on simplicity and speed, there are other more advanced mode-line packages available for evil-mode users:
+  - `Powerline`: A powerful, highly customizable mode-line
+  - `Spaceline`: Derived from Powerline, with additional features
+  - `Doom-modeline`: Another derivative of Powerline, with Doom Emacs aesthetics
+
+  If you need to hide specific minor modes from the mode-line, consider using:
+  - `diminish`: A package dedicated to hiding minor modes from the mode-line
+
+** Installation and Usage
+  To use `modusline` in your Emacs setup, add the following to your Emacs configuration:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'modusline)
+  (modusline-mode 1)
+#+END_SRC
+
+  **Customizing Hidden Minor Modes**
+  You can specify which minor modes to hide from the mode-line by setting `modusline-hidden-minor-modes`. For example:
+
+#+BEGIN_SRC emacs-lisp
+  (setq modusline-hidden-minor-modes
+    '(modusline-mode
+      aggressive-indent-mode
+      auto-revert-mode
+      magit-auto-revert-mode
+      undo-tree-mode
+      visual-line-mode
+      yas-minor-mode
+      smartparens-mode
+      which-key-mode
+      org-indent-mode
+      indent-mode))
+#+END_SRC
+
+** Customization
+  `modusline` offers several custom faces to personalize the mode-line's appearance according to the current evil-mode state:
+
+  - `modusline-modified-face`: For modified buffer indication
+  - `modusline-unmodified-face`: For unmodified buffer indication
+  - `modusline-evil-normal-face`: For evil normal state
+  - `modusline-evil-insert-face`: For evil insert state
+  - `modusline-evil-visual-face`: For evil visual state
+  - `modusline-evil-replace-face`: For evil replace state
+  - `modusline-evil-emacs-face`: For evil emacs state
+  - `modusline-evil-syntax-face`: For syntax checking state
+
+  Customize these faces to match your Emacs theme or personal preference.
+
+** Toggling modusline
+  You can toggle `modusline` on or off at any time by using the command:
+
+#+BEGIN_SRC emacs-lisp
+  M-x modusline-mode
+#+END_SRC
