@@ -35,8 +35,8 @@ Here are some screenshots demonstrating `modusline` in action:
   (modusline-mode 1)
 #+END_SRC
 
-  **Customizing Hidden Minor Modes**
-  You can specify which minor modes to hide from the mode-line by setting `modusline-hidden-minor-modes`. For example:
+*** Hidden Minor Modes
+You can specify which minor modes to hide from the mode-line by setting `modusline-hidden-minor-modes`. For example:
 
 #+BEGIN_SRC emacs-lisp
   (setq modusline-hidden-minor-modes
