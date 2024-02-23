@@ -20,12 +20,12 @@ Here are some screenshots demonstrating `modusline` in action:
 
 ** Comparison
   While `modusline` focuses on simplicity and speed, there are other more advanced mode-line packages available for evil-mode users:
-  - `Powerline`: A powerful, highly customizable mode-line
-  - `Spaceline`: Derived from Powerline, with additional features
-  - `Doom-modeline`: Another derivative of Powerline, with Doom Emacs aesthetics
+  - [https://www.emacswiki.org/emacs/PowerLine][Powerline]: A powerful, highly customizable mode-line
+  - [https://github.com/TheBB/spaceline][Spaceline]: Derived from Powerline, with additional features
+  - [https://github.com/seagle0128/doom-modeline][Doom-modeline]: Another derivative of Powerline, with Doom Emacs aesthetics
 
   If you need to hide specific minor modes from the mode-line, consider using:
-  - `diminish`: A package dedicated to hiding minor modes from the mode-line
+  - [https://github.com/myrjola/diminish.el][Diminish]: A package dedicated to hiding minor modes from the mode-line
 
 ** Installation and Usage
   To use `modusline` in your Emacs setup, add the following to your Emacs configuration:

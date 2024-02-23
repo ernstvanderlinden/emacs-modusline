@@ -4,7 +4,7 @@
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24.4") (evil "1.2.14"))
 ;; Keywords: line, convenience, evil
-;; URL: https://github.com/ernestvanderlinden/emacs-modusline
+;; URL: https://github.com/ernstvanderlinden/emacs-modusline
 
 
 ;; This file is not part of GNU Emacs.
@@ -47,7 +47,7 @@
 ;; - `Doom-modeline' :derived from Powerline
 
 ;; Similar package to hide minor-modes from mode-line:
-;; - `diminish'
+;; - `Diminish'
 
 ;;; Usage:
 
@@ -161,7 +161,6 @@
      mode-line-frame-identification
      mode-line-buffer-identification "   "
      mode-line-position
-     ;; evil-mode-line-tag
      (:eval (modusline-visible-minor-modes))
      (:eval (propertize 
              (concat 
@@ -174,7 +173,7 @@
                      'modusline-unmodified-face)))
      (vc-mode vc-mode) "  "
      mode-line-misc-info
-     ;; right align, adjust offset when needed
+     ;; right align
      (:eval (propertize 
              " " 'display 
              `(space 
@@ -183,7 +182,6 @@
                   ,(string-width 
                     (format-mode-line 
                      '(:eval (modusline-evil-state-indicator)))) -1))))
-     ;; Your right-aligned segment
      (:eval (modusline-evil-state-indicator))
      )))
 
@@ -206,7 +204,7 @@
                  #'modusline-evil-refresh-mode-line)
   (modusline--restore-mode-line-format))
 
-;; override `evil-refresh-mode-line' when active.
+;; override `evil-refresh-mode-line' when is active.
 (defun modusline-evil-refresh-mode-line (&optional state)
   "Override of `evil-refresh-mode-line' when minor-mode is active."
   (force-mode-line-update t))
@@ -225,25 +223,6 @@
                 (t 'mode-line))))
     (propertize 
      (format " %s " (upcase (symbol-name evil-state))) 'face face)))
-
-;; (defun modusline--add-evil-state-indicator ()
-;;   "Add modusline-evil-state-indicator to the mode-line-format."
-;;   (unless (member '(:eval (modusline-evil-state-indicator)) mode-line-format)
-;;     (setq mode-line-format 
-;;           (cons '(:eval (modusline-evil-state-indicator)) mode-line-format))))
-
-;; (defun modusline--remove-evil-state-indicator ()
-;;   "Remove modusline-evil-state-indicator from the mode-line-format."
-;;   (setq mode-line-format 
-;;         (remove '(:eval (modusline-evil-state-indicator)) mode-line-format)))
-
-;; (defun modusline-toggle-evil-state-indicator ()
-;;   "Toggle the modusline-evil-state-indicator on or off in the mode-line."
-;;   (interactive)
-;;   (if (member '(:eval (modusline-evil-state-indicator)) mode-line-format)
-;;       (modusline--remove-evil-state-indicator)
-;;     (modusline--add-evil-state-indicator))
-;;   (force-mode-line-update t))
 
 ;;;###autoload
 (define-minor-mode modusline-mode
