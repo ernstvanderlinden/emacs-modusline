@@ -213,16 +213,17 @@
 
 (defun modusline-evil-state-indicator ()
   "Returns a formatted string with the current evil state with a face."
-  (let ((face (cl-case evil-state
-                (normal 'modusline-evil-normal-face)
-                (insert 'modusline-evil-insert-face)
-                (visual 'modusline-evil-visual-face)
-                (replace 'modusline-evil-replace-face)
-                (emacs 'modusline-evil-emacs-face)
-                (syntax 'modusline-evil-syntax-face)
-                (t 'mode-line))))
-    (propertize 
-     (format " %s " (upcase (symbol-name evil-state))) 'face face)))
+  ;; evil-mode enabled?
+  (when (bound-and-true-p evil-state)
+    (let ((face (cl-case evil-state
+                  (normal 'modusline-evil-normal-face)
+                  (insert 'modusline-evil-insert-face)
+                  (visual 'modusline-evil-visual-face)
+                  (replace 'modusline-evil-replace-face)
+                  (emacs 'modusline-evil-emacs-face)
+                  (syntax 'modusline-evil-syntax-face))))
+      (propertize 
+       (format " %s " (upcase (symbol-name evil-ate))) 'face face))))
 
 ;;;###autoload
 (define-minor-mode modusline-mode
