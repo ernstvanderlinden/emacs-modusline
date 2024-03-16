@@ -173,6 +173,10 @@
                      'modusline-unmodified-face)))
      (vc-mode vc-mode) "  "
      mode-line-misc-info
+     "  "
+     ;; current major mode
+     (:eval (propertize (format-mode-line mode-name)
+                        'face 'modusline-mode-face))
      ;; right align
      (:eval (propertize 
              " " 'display 
