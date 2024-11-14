@@ -96,6 +96,11 @@
   :group 'convenience
   :prefix "modusline-")
 
+(defface modusline-mode-face
+  '((t (:weight bold)))
+  "Face for mode line. to avoid theme error?"
+  :group 'modusline)
+
 ;; Define faces for (un)modified
 (defface modusline-modified-face
   '((t (:weight bold)))
@@ -159,7 +164,8 @@
                    mode-line-modified mode-line-remote)
                   display (min-width (5.0)))
      mode-line-frame-identification
-     mode-line-buffer-identification "   "
+     ;; Replace standard buffer identification with our custom one
+     (:eval (modusline--buffer-identification)) "   "
      mode-line-position
      (:eval (modusline-visible-minor-modes))
      (:eval (propertize 
@@ -174,10 +180,8 @@
      (vc-mode vc-mode) "  "
      mode-line-misc-info
      "  "
-     ;; current major mode
      (:eval (propertize (format-mode-line mode-name)
                         'face 'modusline-mode-face))
-     ;; right align
      (:eval (propertize 
              " " 'display 
              `(space 
@@ -207,6 +211,45 @@
   (advice-remove 'evil-refresh-mode-line 
                  #'modusline-evil-refresh-mode-line)
   (modusline--restore-mode-line-format))
+
+(defun modusline--get-relative-path ()
+  "Get the relative path of the current buffer's file.
+Returns 'directory/filename' format, showing only the immediate parent directory.
+Handles both regular files and dired buffers."
+  (cond
+   ;; For dired buffers
+   ((derived-mode-p 'dired-mode)
+    (let* ((current-dir (expand-file-name default-directory))
+           (parent-dir (file-name-nondirectory
+                        (directory-file-name current-dir)))
+           (grand-parent-dir (file-name-nondirectory
+                              (directory-file-name
+                               (file-name-directory
+                                (directory-file-name current-dir))))))
+      (if (string= parent-dir "")
+          "/" ; We're at root
+        (concat grand-parent-dir "/" parent-dir))))
+   
+   ;; For regular files
+   (buffer-file-name
+    (let* ((filename (file-name-nondirectory buffer-file-name))
+           (directory (file-name-directory buffer-file-name))
+           (parent-dir (when directory 
+                         (file-name-nondirectory 
+                          (directory-file-name directory)))))
+      (if parent-dir
+          (concat parent-dir "/" filename)
+        filename)))
+   
+   ;; For other buffers (no file)
+   (t (buffer-name))))
+
+(defun modusline--buffer-identification ()
+  "Return formatted string for buffer identification."
+  (let ((path (modusline--get-relative-path)))
+    (propertize path
+                'face 'mode-line-buffer-id
+                'help-echo (or buffer-file-name default-directory))))
 
 ;; override `evil-refresh-mode-line' when is active.
 (defun modusline-evil-refresh-mode-line (&optional state)
