@@ -259,18 +259,23 @@ Handles both regular files and dired buffers."
 ;; (setq evil-mode-line-tag nil)
 
 (defun modusline-evil-state-indicator ()
-  "Returns a formatted string with the current evil state with a face."
-  ;; evil-mode enabled?
-  (when (bound-and-true-p evil-state)
-    (let ((face (cl-case evil-state
-                  (normal 'modusline-evil-normal-face)
-                  (insert 'modusline-evil-insert-face)
-                  (visual 'modusline-evil-visual-face)
-                  (replace 'modusline-evil-replace-face)
-                  (emacs 'modusline-evil-emacs-face)
-                  (syntax 'modusline-evil-syntax-face))))
-      (propertize 
-       (format " %s " (upcase (symbol-name evil-state))) 'face face))))
+  "Returns a formatted string with the current evil state with a face.
+In vimacs with its own vim mode on (`vimacs-vim-mode'), that mode's state."
+  ;; vimacs's vim mode or evil-mode enabled?
+  (let ((state (if (bound-and-true-p vimacs-vim-mode)
+                   (bound-and-true-p vimacs-vim-state)
+                 (bound-and-true-p evil-state))))
+    (when state
+      (let ((face (cl-case state
+                    (normal 'modusline-evil-normal-face)
+                    (insert 'modusline-evil-insert-face)
+                    ((visual visual-line visual-block) 'modusline-evil-visual-face)
+                    (replace 'modusline-evil-replace-face)
+                    (emacs 'modusline-evil-emacs-face)
+                    (syntax 'modusline-evil-syntax-face))))
+        (propertize
+         (format " %s " (upcase (subst-char-in-string ?- ?\s (symbol-name state))))
+         'face face)))))
 
 ;;;###autoload
 (define-minor-mode modusline-mode
