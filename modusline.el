@@ -273,8 +273,10 @@ In vimacs with its own vim mode on (`vimacs-vim-mode'), that mode's state."
                     (replace 'modusline-evil-replace-face)
                     (emacs 'modusline-evil-emacs-face)
                     (syntax 'modusline-evil-syntax-face))))
+        ;; No pad on the left: the mode line's first character lines up
+        ;; with the echo area's below it.
         (propertize
-         (format " %s " (upcase (subst-char-in-string ?- ?\s (symbol-name state))))
+         (format "%s " (upcase (subst-char-in-string ?- ?\s (symbol-name state))))
          'face face)))))
 
 ;;;###autoload
