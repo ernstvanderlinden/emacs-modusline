@@ -82,6 +82,7 @@
 ;;   modusline-evil-replace-face
 ;;   modusline-evil-emacs-face
 ;;   modusline-evil-syntax-face
+;;   modusline-evil-syntax-visual-face
 
 ;; To toggle mode on and off:
 ;;
@@ -136,6 +137,10 @@
 '((t :background "Black" :foreground "white" :inherit 'mode-line))
 "Face for Evil Syntax state."
 :group 'modusline)
+(defface modusline-evil-syntax-visual-face
+  '((t :background "gray30" :foreground "white" :inherit 'mode-line))
+  "Face for vimacs's syntax-visual state."
+  :group 'modusline)
 
 (defvar modusline-hidden-minor-modes '(modusline-mode)
   "List of minor modes to exclude from the mode line.")
@@ -262,7 +267,8 @@ In vimacs with its own vim mode on (`vimacs-vim-mode'), that mode's state."
                     ((visual visual-line visual-block) 'modusline-evil-visual-face)
                     (replace 'modusline-evil-replace-face)
                     (emacs 'modusline-evil-emacs-face)
-                    (syntax 'modusline-evil-syntax-face))))
+                    (syntax 'modusline-evil-syntax-face)
+                    (syntax-visual 'modusline-evil-syntax-visual-face))))
         ;; No pad on the left: the mode line's first character lines up
         ;; with the echo area's below it.
         (propertize
