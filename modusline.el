@@ -181,17 +181,7 @@
      mode-line-misc-info
      "  "
      (:eval (propertize (format-mode-line mode-name)
-                        'face 'modusline-mode-face))
-     (:eval (propertize 
-             " " 'display 
-             `(space 
-               :align-to 
-               (- right 
-                  ,(string-width 
-                    (format-mode-line 
-                     '(:eval (modusline-evil-state-indicator)))) -1))))
-     (:eval (modusline-evil-state-indicator))
-     )))
+                        'face 'modusline-mode-face)))))
 
 (defun modusline--backup-mode-line-format ()
   "Backup the original mode-line format."
