@@ -63,7 +63,8 @@ You can specify which minor modes to hide from the mode-line by setting `modusli
   - `modusline-evil-visual-face`: For evil visual state
   - `modusline-evil-replace-face`: For evil replace state
   - `modusline-evil-emacs-face`: For evil emacs state
-  - `modusline-evil-syntax-face`: For syntax checking state
+  - `modusline-evil-syntax-face`: For the syntax state (evil's, vimacs's)
+  - `modusline-evil-syntax-visual-face`: For vimacs's syntax-visual state
 
   Customize these faces to match your Emacs theme or personal preference.
 
