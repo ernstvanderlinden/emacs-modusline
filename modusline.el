@@ -1,9 +1,9 @@
-;;; modusline.el --- A fast and simple mode-line for `evil-mode' users
+;;; modusline.el --- A fast and simple mode-line for vimacs's vim mode
 
 ;; Author: Ernest van der Linden  <hello@ernestoz.com>
-;; Version: 0.1.0
-;; Package-Requires: ((emacs "24.4") (evil "1.2.14"))
-;; Keywords: line, convenience, evil
+;; Version: 0.2.0
+;; Package-Requires: ((emacs "24.4"))
+;; Keywords: line, convenience
 ;; URL: https://github.com/ernstvanderlinden/emacs-modusline
 
 
@@ -39,9 +39,9 @@
 ;;; Commentary:
 
 ;; `modusline' provides a lightweight and fast mode-line designed specifically
-;; for users of evil-mode.
+;; for users of vimacs's vim mode (`vimacs-vim-mode'): its state at the left.
 
-;; Similar and more advanced evil mode-line packages: 
+;; Similar and more advanced mode-line packages:
 ;; - `Powerline'
 ;; - `Spaceline' :derived from Powerline
 ;; - `Doom-modeline' :derived from Powerline
@@ -76,21 +76,19 @@
 ;;
 ;;   modusline-modified-face
 ;;   modusline-unmodified-face
-;;   modusline-evil-normal-face
-;;   modusline-evil-insert-face
-;;   modusline-evil-visual-face
-;;   modusline-evil-replace-face
-;;   modusline-evil-emacs-face
-;;   modusline-evil-syntax-face
-;;   modusline-evil-syntax-visual-face
+;;   modusline-normal-face
+;;   modusline-insert-face
+;;   modusline-visual-face
+;;   modusline-replace-face
+;;   modusline-emacs-face
+;;   modusline-syntax-face
+;;   modusline-syntax-visual-face
 
 ;; To toggle mode on and off:
 ;;
 ;; M-x modusline-mode
 
 ;;; Code:
-
-(require 'evil)
 
 (defgroup modusline nil
   "Customization group for modusline."
@@ -112,34 +110,34 @@
   "Face for mode line unmodified indicator."
   :group 'modusline)
 
-;; Define faces for each Evil state
-(defface modusline-evil-normal-face
+;; Define faces for each state of the vim mode
+(defface modusline-normal-face
   '((t :background "DarkGoldenrod2" :foreground "black" :inherit 'mode-line))
-  "Face for Evil Normal state."
+  "Face for the vim mode's normal state."
   :group 'modusline)
-(defface modusline-evil-insert-face
+(defface modusline-insert-face
   '((t :background "chartreuse3" :foreground "black" :inherit 'mode-line))
-  "Face for Evil Insert state."
+  "Face for the vim mode's insert state."
   :group 'modusline)
-(defface modusline-evil-visual-face
+(defface modusline-visual-face
   '((t :background "gray" :foreground "black" :inherit 'mode-line))
-  "Face for Evil Visual state."
+  "Face for the vim mode's visual state."
   :group 'modusline)
-(defface modusline-evil-replace-face
+(defface modusline-replace-face
   '((t :background "red" :foreground "black" :inherit 'mode-line))
-  "Face for Evil Replace state."
+  "Face for the vim mode's replace state."
   :group 'modusline)
-(defface modusline-evil-emacs-face
+(defface modusline-emacs-face
   '((t :background "SkyBlue2" :foreground "black" :inherit 'mode-line))
-  "Face for Evil Emacs state."
+  "Face for the vim mode's Emacs state."
   :group 'modusline)
-(defface modusline-evil-syntax-face
+(defface modusline-syntax-face
 '((t :background "Black" :foreground "white" :inherit 'mode-line))
-"Face for Evil Syntax state."
+"Face for the vim mode's syntax state."
 :group 'modusline)
-(defface modusline-evil-syntax-visual-face
+(defface modusline-syntax-visual-face
   '((t :background "gray30" :foreground "white" :inherit 'mode-line))
-  "Face for vimacs's syntax-visual state."
+  "Face for the vim mode's syntax-visual state."
   :group 'modusline)
 
 (defvar modusline-hidden-minor-modes '(modusline-mode)
@@ -164,7 +162,7 @@
 (defun modusline--show-mode-line ()
   (setq-default 
    mode-line-format
-   '((:eval (modusline-evil-state-indicator)) "%e" mode-line-front-space
+   '((:eval (modusline-state-indicator)) "%e" mode-line-front-space
      (:propertize ("" mode-line-mule-info mode-line-client 
                    mode-line-modified mode-line-remote)
                   display (min-width (5.0)))
@@ -197,14 +195,10 @@
 
 (defun modusline--enable ()
   "Enable ModusLine."
-  (advice-add 'evil-refresh-mode-line 
-              :override #'modusline-evil-refresh-mode-line)
   (modusline--backup-mode-line-format)
   (modusline--show-mode-line))
 (defun modusline--disable ()
   "Disable ModusLine."
-  (advice-remove 'evil-refresh-mode-line 
-                 #'modusline-evil-refresh-mode-line)
   (modusline--restore-mode-line-format))
 
 (defun modusline--get-relative-path ()
@@ -246,29 +240,20 @@ Handles both regular files and dired buffers."
                 'face 'mode-line-buffer-id
                 'help-echo (or buffer-file-name default-directory))))
 
-;; override `evil-refresh-mode-line' when is active.
-(defun modusline-evil-refresh-mode-line (&optional state)
-  "Override of `evil-refresh-mode-line' when minor-mode is active."
-  (force-mode-line-update t))
-;; DISABLED: We simply do not include this in the mode-line-format var.
-;; (setq evil-mode-line-tag nil)
-
-(defun modusline-evil-state-indicator ()
-  "Returns a formatted string with the current evil state with a face.
-In vimacs with its own vim mode on (`vimacs-vim-mode'), that mode's state."
-  ;; vimacs's vim mode or evil-mode enabled?
-  (let ((state (if (bound-and-true-p vimacs-vim-mode)
-                   (bound-and-true-p vimacs-vim-state)
-                 (bound-and-true-p evil-state))))
+(defun modusline-state-indicator ()
+  "The vim mode's state (vimacs's `vimacs-vim-mode'), in its face; nil
+where the mode is off."
+  (let ((state (and (bound-and-true-p vimacs-vim-mode)
+                    (bound-and-true-p vimacs-vim-state))))
     (when state
       (let ((face (cl-case state
-                    (normal 'modusline-evil-normal-face)
-                    (insert 'modusline-evil-insert-face)
-                    ((visual visual-line visual-block) 'modusline-evil-visual-face)
-                    (replace 'modusline-evil-replace-face)
-                    (emacs 'modusline-evil-emacs-face)
-                    (syntax 'modusline-evil-syntax-face)
-                    (syntax-visual 'modusline-evil-syntax-visual-face))))
+                    (normal 'modusline-normal-face)
+                    (insert 'modusline-insert-face)
+                    ((visual visual-line visual-block) 'modusline-visual-face)
+                    (replace 'modusline-replace-face)
+                    (emacs 'modusline-emacs-face)
+                    (syntax 'modusline-syntax-face)
+                    (syntax-visual 'modusline-syntax-visual-face))))
         ;; No pad on the left: the mode line's first character lines up
         ;; with the echo area's below it.
         (propertize

@@ -1,25 +1,25 @@
 * ModusLine
-  `modusline` is designed to be a lightweight and fast mode-line for Emacs `evil-mode` users. It aims to provide a minimal and efficient mode-line setup that integrates seamlessly with evil-mode's state indication.
+  `modusline` is designed to be a lightweight and fast mode-line for vimacs's vim mode. It aims to provide a minimal and efficient mode-line setup that shows the vim mode's state.
 
 ** Screenshots
 Here are some screenshots demonstrating `modusline` in action:
 
-#+CAPTION: Evil Normal State 
+#+CAPTION: Normal State 
 [[./screenshots/screenshot1.png]]
 
-#+CAPTION: Evil Insert State 
+#+CAPTION: Insert State 
 [[./screenshots/screenshot2.png]]
 
-#+CAPTION: Evil Emacs State 
+#+CAPTION: Emacs State 
 [[./screenshots/screenshot3.png]]
 
 ** Features
   - Lightweight and fast operation
   - Easy customization of hidden minor modes
-  - Supports evil-mode state indication with customizable faces
+  - Shows the vim mode's state with customizable faces
 
 ** Comparison
-  While `modusline` focuses on simplicity and speed, there are other more advanced mode-line packages available for evil-mode users:
+  While `modusline` focuses on simplicity and speed, there are other more advanced mode-line packages available:
   - [[https://www.emacswiki.org/emacs/PowerLine][Powerline]]: A powerful, highly customizable mode-line
   - [[https://github.com/TheBB/spaceline][Spaceline]]: Derived from Powerline, with additional features
   - [[https://github.com/seagle0128/doom-modeline][Doom-modeline]]: Another derivative of Powerline, with Doom Emacs aesthetics
@@ -54,17 +54,17 @@ You can specify which minor modes to hide from the mode-line by setting `modusli
 #+END_SRC
 
 ** Customization
-  `modusline` offers several custom faces to personalize the mode-line's appearance according to the current evil-mode state:
+  `modusline` offers several custom faces to personalize the mode-line's appearance according to the vim mode's state:
 
   - `modusline-modified-face`: For modified buffer indication
   - `modusline-unmodified-face`: For unmodified buffer indication
-  - `modusline-evil-normal-face`: For evil normal state
-  - `modusline-evil-insert-face`: For evil insert state
-  - `modusline-evil-visual-face`: For evil visual state
-  - `modusline-evil-replace-face`: For evil replace state
-  - `modusline-evil-emacs-face`: For evil emacs state
-  - `modusline-evil-syntax-face`: For the syntax state (evil's, vimacs's)
-  - `modusline-evil-syntax-visual-face`: For vimacs's syntax-visual state
+  - `modusline-normal-face`: For the normal state
+  - `modusline-insert-face`: For the insert state
+  - `modusline-visual-face`: For the visual state
+  - `modusline-replace-face`: For the replace state
+  - `modusline-emacs-face`: For the emacs state
+  - `modusline-syntax-face`: For the syntax state
+  - `modusline-syntax-visual-face`: For vimacs's syntax-visual state
 
   Customize these faces to match your Emacs theme or personal preference.
 
