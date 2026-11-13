@@ -1,4 +1,4 @@
-;;; modusline.el --- A fast and simple mode-line for vimacs's vim mode
+;;; modusline.el --- A fast and simple mode-line for viemacs's vim mode
 
 ;; Author: Ernest van der Linden  <hello@ernestoz.com>
 ;; Version: 0.2.0
@@ -39,7 +39,7 @@
 ;;; Commentary:
 
 ;; `modusline' provides a lightweight and fast mode-line designed specifically
-;; for users of vimacs's vim mode (`vimacs-vim-mode'): its state at the left.
+;; for users of viemacs's vim mode (`viemacs-vim-mode'): its state at the left.
 
 ;; Similar and more advanced mode-line packages:
 ;; - `Powerline'
@@ -241,10 +241,10 @@ Handles both regular files and dired buffers."
                 'help-echo (or buffer-file-name default-directory))))
 
 (defun modusline-state-indicator ()
-  "The vim mode's state (vimacs's `vimacs-vim-mode'), in its face; nil
+  "The vim mode's state (viemacs's `viemacs-vim-mode'), in its face; nil
 where the mode is off."
-  (let ((state (and (bound-and-true-p vimacs-vim-mode)
-                    (bound-and-true-p vimacs-vim-state))))
+  (let ((state (and (bound-and-true-p viemacs-vim-mode)
+                    (bound-and-true-p viemacs-vim-state))))
     (when state
       (let ((face (cl-case state
                     (normal 'modusline-normal-face)
