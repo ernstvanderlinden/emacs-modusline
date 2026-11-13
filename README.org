@@ -1,5 +1,5 @@
 * ModusLine
-  `modusline` is designed to be a lightweight and fast mode-line for vimacs's vim mode. It aims to provide a minimal and efficient mode-line setup that shows the vim mode's state.
+  `modusline` is designed to be a lightweight and fast mode-line for viemacs's vim mode. It aims to provide a minimal and efficient mode-line setup that shows the vim mode's state.
 
 ** Screenshots
 Here are some screenshots demonstrating `modusline` in action:
@@ -64,7 +64,7 @@ You can specify which minor modes to hide from the mode-line by setting `modusli
   - `modusline-replace-face`: For the replace state
   - `modusline-emacs-face`: For the emacs state
   - `modusline-syntax-face`: For the syntax state
-  - `modusline-syntax-visual-face`: For vimacs's syntax-visual state
+  - `modusline-syntax-visual-face`: For viemacs's syntax-visual state
 
   Customize these faces to match your Emacs theme or personal preference.
 
