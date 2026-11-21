@@ -1,7 +1,7 @@
 ;;; modusline.el --- A fast and simple mode-line for viemacs's vim mode
 
 ;; Author: Ernest van der Linden  <hello@ernestoz.com>
-;; Version: 0.2.0
+;; Version: 0.2.1
 ;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: line, convenience
 ;; URL: https://github.com/ernstvanderlinden/emacs-modusline
@@ -140,8 +140,13 @@
   "Face for the vim mode's syntax-visual state."
   :group 'modusline)
 
-(defvar modusline-hidden-minor-modes '(modusline-mode)
-  "List of minor modes to exclude from the mode line.")
+(defcustom modusline-hidden-minor-modes '(modusline-mode)
+  "List of minor modes to exclude from the mode line.
+An option, so that a value given before the package is loaded holds
+\(use-package's `:custom', Customize): a plain variable took its own
+default then, and the list was not hidden."
+  :type '(repeat symbol)
+  :group 'modusline)
 
 (defvar modusline--modified-text "modified")
 (defvar modusline--unmodified-text "")
